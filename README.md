@@ -1,1 +1,1 @@
-# tizen
+Tizn related projects.
