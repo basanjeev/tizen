@@ -1,0 +1,198 @@
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="AuthorSignature">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></CanonicalizationMethod>
+<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
+<Reference URI="bin%2Fuicomponents">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>7t60GP7eavuKphW9Iy89uz7O3sIFpkMBEswKbiigREI=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_1.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>fq6DdRhm5xvvEB0/cayNLRUA3ERLFP9YCLtjImAFVhE=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_2.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>lKu9VfNdKqyzj40i3C86fD6PDnf0DWQSwn+fULl/jfM=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_3.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>kuZPFdc+TkHvJ15m/9gzTUayvJSw2YV6zt8A/TyqoX0=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_4.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>ifYa1vRWohBb/y/5nF5d6Vl/IkIwaQgDwO1uQEH99e4=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_5.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>fNP0z3b2CzZ4ZjNRuVrX2iPw2V0tA9CuXYJgulLf3xI=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_6.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>NWTP3sNAtVMBJVSSZfhQKYOgN05G/eYCUU5RBFvzOBc=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_7.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>0Vs+N4Bt6Emfrtr6g32VyPvYoCj11vVdqMiYYpm0d7c=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2F100_8.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>OT/LtmCjjb/ntkoRBBqUB9j5QKW9zQ90cNWasPIYBIY=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fanimated_logo.gif">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>CzO1AXJNx8pLpTPN52Z9TybOCkwhPoJJFPGC0IjwU1I=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fb_option_list_icon_action.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>ywC5UQ9oxYh7Y+iG7rIzDid9FsJJ7+uVyt3oyckMO7U=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fb_option_list_icon_delete.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>nGDJbF66DYGxkVxRker9idEy3naHcUVpTQIZu/E6XxI=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fb_option_list_icon_share.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>hnQdc5Y1QV8WTG7I1i0tfCzxjwGOoY35SmG4VSS/vws=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fbmp_image.bmp">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>8wPxGjO15p8xz2g6jp86SUxwDpW++lRDsuurqEL+L8s=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fgrid_image%2F1_raw.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>IJNLOq/2eGlWpHGmr+9Mr8bWDbnm0RohlK0cMHO8jZU=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fgrid_image%2F2_raw.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>S9L9E5QpM5gu7cRg8B4Y+030ULCkfPBJA4gMdIHuyCw=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fhorz_scrollbar.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>ZJMOojE8pcti4mJJDD/iNw8d0k139TVGwzwEpGNbNyQ=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fiu.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>iLwO5Bzet3XJ6+hLP5KGoIsFcgDFFICC19Pk+JGz4is=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fjpg_image.jpg">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>/4mT81NPioHVc0mXBrlVKViZMqKK18ediNE9o8GtsvU=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Flogo.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>Xok+PQXIR/QneTddPOwYqyFzQ6nSq465FVTMgwDshNc=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fmusic_controller_btn_mobile.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>F6r8Hrajwn3vtJ+89g/eFVrdC4H5N5c52NqrhKpCM+M=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fmusic_controller_btn_play.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>HFaoU5/uzRbEFeuIOZMnEKHt61c3kEDK7fBTT7BhmWY=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fmusic_controller_btn_repeat_all.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>NShybnHIvN4cEbuRhJio1LrWfYcYBw9c+OF3p2FH0M0=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fmusic_controller_btn_shuffle_on.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>ZtWqHSZkzGY+2u5vkXy70lGx3Etz08k5SEFeK2aLaFQ=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Fpng_image.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>+DfK2pb1qYWJPw/xJLAvAvEWp6SS90IHBrI70Nyw5lk=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_btn_delete_holo_dark.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>rlJkZgGVcOYpubPZcYSFkJvNhPwK1gh45rGV7ex5ick=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_ic_popup_btn_check.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>mOiWarD1KXAs7Y03mFrsA2HBiO1Q+bpJCxEVU6o7Wm8=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_ic_popup_btn_delete.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>nKAidX/UKOZL+48KktHApiylhgf4LJiA7vs3OCbjjmw=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_number_controller_icon_alert.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>PT1xPN46r37h5faxakpBNDrUtRi9swDcHOn2hIpvBWA=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_number_controller_icon_bell.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>nkevb3XNw2MMU9jhQnBHhZ2adcDqqgg23Oc2vMNX7n8=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_number_controller_icon_ringtone_mute.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>fsamHSApLCXkqbHbrn8zAcJgaSR/GHhbURIzAlDjhzI=</DigestValue>
+</Reference>
+<Reference URI="res%2Fimages%2Ftw_number_controller_icon_ringtone_sound.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>5qmvcFmM2MtSBbY/WOi52Mg5pudA9wviztY3z9QWD/4=</DigestValue>
+</Reference>
+<Reference URI="res%2Fui_controls.edc">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>L2CcrjL3xTh5eudds1SpKVWcCF8NjxeCEpC3y3i4yrE=</DigestValue>
+</Reference>
+<Reference URI="res%2Fui_controls.edj">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>sstMpTOBtZEj+lct6llmDslgTKp61zltzksXXJORwhQ=</DigestValue>
+</Reference>
+<Reference URI="shared%2Fres%2Fuicomponents.png">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>1d0oEZHqPn+QzNzGIHwj9ODby6x9ggFs9uOsav6jPNs=</DigestValue>
+</Reference>
+<Reference URI="tizen-manifest.xml">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>qTLE6YvShE1O/hbbUkqfpMXrSze9fstHk7IZtOM5uck=</DigestValue>
+</Reference>
+<Reference URI="#prop">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2006/12/xml-c14n11"></Transform>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>lpo8tUDs054eLlBQXiDPVDVKfw30ZZdtkRs1jd7H5K8=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>
+f9IQBKep3QYdWbmAzDo65VemeMdHX2+FBO8eARnh+d03IpPYWiLFBICmDSQweGJeAucP15dXXQe8
+lQ4jONO/zU7KDY9XegbuBC2ZJ2EAeJ7tIBbI+v0pjichR6pfFAYNByAom/4K4G82Or0Y3piXfOU8
+zpkgc+RKDM0/SDda/8Y=
+</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>
+MIIClTCCAX2gAwIBAgIGAUX+iaC6MA0GCSqGSIb3DQEBBQUAMFYxGjAYBgNVBAoMEVRpemVuIEFz
+c29jaWF0aW9uMRowGAYDVQQLDBFUaXplbiBBc3NvY2lhdGlvbjEcMBoGA1UEAwwTVGl6ZW4gRGV2
+ZWxvcGVycyBDQTAeFw0xMjExMDEwMDAwMDBaFw0xOTAxMDEwMDAwMDBaMBExDzANBgNVBAMMBmF1
+dGhvcjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAgKCL2LL2sZ9wpS9IMO5GKXCSPAz5oKD0
+o5HMsGMQThCKmSTFPm9J4qj+MYomrufm2RMA8xp1KyJ79KK2BKg4/DE/5vvWLf1Fh8Jwut9JpkfW
+1b8vNul87ft5NJ7ji5cu7wtQYvxC55BcaXAu3yv0AB0/oXVCRuvluSK5X7lvLHsCAwEAAaMyMDAw
+DAYDVR0TAQH/BAIwADALBgNVHQ8EBAMCB4AwEwYDVR0lBAwwCgYIKwYBBQUHAwMwDQYJKoZIhvcN
+AQEFBQADggEBADVYof211H9txSG7Bkmcv0erP4gu7uJt61A+4BYu7g2Gv0sVme8NTvu4289Kpdb8
+pR5nosBnEL81eHJBuiCopWl1Yf12gc1hx/+nhlD8vdE3idXQUewCACLdaWNxJ5FO6RYZa3Stp6nO
+y5U/hTktDpUMlq+ByR7DhjfIFd4D9O4IbQmp7VbsoGrMh8Jqm+q+mSQh6hth0qK2//Z5kHZLQGfi
+m1q/W0L6BlE1+zPo8RdeLxEbsoRMYnvOzTYg2dgq5yPT64SCBEamRYeUdIOjbF+y86/1h6NMhmFu
+12NOMj/hg9MfgsXIksRvusRX16blD7uOUz3DwsASa5YnlBdts48=
+</X509Certificate>
+<X509Certificate>
+MIIDOTCCAiGgAwIBAgIBATANBgkqhkiG9w0BAQUFADBYMRowGAYDVQQKDBFUaXplbiBBc3NvY2lh
+dGlvbjEaMBgGA1UECwwRVGl6ZW4gQXNzb2NpYXRpb24xHjAcBgNVBAMMFVRpemVuIERldmVsb3Bl
+cnMgUm9vdDAeFw0xMjAxMDEwMDAwMDBaFw0yNzAxMDEwMDAwMDBaMFYxGjAYBgNVBAoMEVRpemVu
+IEFzc29jaWF0aW9uMRowGAYDVQQLDBFUaXplbiBBc3NvY2lhdGlvbjEcMBoGA1UEAwwTVGl6ZW4g
+RGV2ZWxvcGVycyBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANVGhRGmMIUyBA7o
+PCz8Sxut6z6HNkF4oDIuzuKaMzRYPeWodwe9O0gmqAkToQHfwg2giRhE5GoPld0fq+OYMMwSasCu
+g8dwODx1eDeSYVuOLWRxpAmbTXOsSFi6VoWeyaPEm18JBHvZBsU5YQtgZ6Kp7MqzvQg3pXOxtajj
+vyHxiatJl+xXrHgcXC1wgyG3buty7u/Fi2mvKXJ0PRJcCjjK81dqe/Vr20sRUCrbk02zbm5ggFt/
+jIEhV8wbFRQpliobc7J4dSTKhFfrqGM8rdd54LYhD7gSI1CFSe16pUXfcVR7FhJztRaiGLnCrwBE
+dyTZ248+D4L/qR/D0axb3jcCAwEAAaMQMA4wDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOC
+AQEAnOXXQ/1O/QTDHyrmQDtFziqPY3xWlJBqJtEqXiT7Y+Ljpe66e+Ee/OjQMlZe8gu21/8cKklH
+95RxjopMWCVedXDUbWdvS2+CdyvVW/quT2E0tjqIzXDekUTYwwhlPWlGxvfj3VsxqSFq3p8Brl04
+1Gx5RKAGyKVsMfTLhbbwSWwApuBUxYfcNpKwLWGPXkysu+HctY03OKv4/xKBnVWiN8ex/Sgesi0M
++OBAOMdZMPK32uJBTeKFx1xZgTLIhk45V0hPOomPjZloiv0LSS11eyd451ufjW0iHRE7WlpR6EvI
+W6TFyZgMpQq+kg4hWl2SBTf3s2VI8Ygz7gj8TMlClg==
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+<Object Id="prop"><SignatureProperties xmlns:dsp="http://www.w3.org/2009/xmldsig-properties"><SignatureProperty Id="profile" Target="#AuthorSignature"><dsp:Profile URI="http://www.w3.org/ns/widgets-digsig#profile"></dsp:Profile></SignatureProperty><SignatureProperty Id="role" Target="#AuthorSignature"><dsp:Role URI="http://www.w3.org/ns/widgets-digsig#role-author"></dsp:Role></SignatureProperty><SignatureProperty Id="identifier" Target="#AuthorSignature"><dsp:Identifier></dsp:Identifier></SignatureProperty></SignatureProperties></Object>
+</Signature>

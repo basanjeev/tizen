@@ -1,0 +1,31 @@
+
+
+Instruction to use OAuth 2.0 Sample application.
+
+Prerequisites:
+The dummy consumer key and dummy consumer secret in the oauth2_provider_configs.h
+	should be replaced with respective App Id and App secret in the SampleApp.
+	Refer to the respective service owner to get the keys.
+
+1. On launching the application you get a list of several service providers.
+
+2. The service providers along with the different type of autherization grant are provided.
+
+3. To get the access token, example for google access token, click on the Google button,
+	You have to enter ur gmail credentials and it will response you with
+	access token, refresh token and token expering time in a pop up.
+
+4. For implicit grant autherization(Facebook), after we enter the 
+	credentials we get acess token and expire time in response.
+
+5. For client cretential autherization grant(Twitter) we directly get 
+	the acess token using the predefined client id and secret.
+
+6. For password autherization grant(Salesforce) we directly get the 
+	acess token using the predefined client id and secret.
+
+7. In any time during the autherization process(code, implicit),
+	we can come back to main page using the hardware back button or the 
+	cancel key and the appropriate reponse will be shown in the pop up.
+
+8. There is a button added in the list to clear all the cache and cookie data.
