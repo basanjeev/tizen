@@ -1,0 +1,2536 @@
+#define MSG_ID_AMMO (0)
+#define MSG_ID_ANGLE (1)
+#define MSG_ID_STRENGTH (2)
+
+externals {
+   external: "elm";
+}
+
+fonts {
+   font: "Woodstamp.otf" "Game";
+}
+
+color_classes {
+
+   color_class {
+      name: "regular";
+      color: 255 255 255 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "regular_pressed";
+      color: 100 100 100 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "button";
+      color: 255 102 51 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "button_pressed";
+      color: 153 204 51 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "success";
+      color: 153 204 51 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "fail";
+      color: 255 102 51 255;
+      color2: 70 70 70 255;
+      color3: 70 70 70 255;
+   }
+
+   color_class {
+      name: "invisible";
+      color: 255 255 255 0;
+      color2: 255 255 255 0;
+      color3: 255 255 255 0;
+   }
+
+}
+
+collections {
+group {
+   name: "ammo";
+
+   images {
+      image: "bomb.png" COMP;
+   }
+
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_INT) && (id == MSG_ID_AMMO)) {
+            new ammo = getarg(2);
+            new bomb;
+            for (bomb = 1; bomb <= 10; bomb++) {
+               new emission[16];
+               if (bomb <= ammo)
+                  snprintf(emission, sizeof(emission), "bomb%i,visible", bomb);
+               else
+                  snprintf(emission, sizeof(emission), "bomb%i,hide", bomb);
+               emit(emission, "cannon_theme");
+            }
+         }
+      }
+   }
+
+   parts {
+
+#define BOMB(_n, _x, _y) \
+      part { \
+         name: "bomb"_n; \
+         type: IMAGE; \
+         mouse_events: 0; \
+         description { \
+            state: "default" 0.0; \
+            min: 30 30; \
+            max: 30 30; \
+            fixed: 1 1; \
+            rel1.offset: _x (_y + 16); \
+            rel2.offset: (_x - 1) (_y + 15); \
+            image.normal: "bomb.png"; \
+            color: 255 255 255 0; \
+            align: 0 1; \
+         } \
+         description { \
+            state: "visible" 0.0; \
+            inherit: "default" 0.0; \
+            color: 255 255 255 255; \
+         } \
+      } \
+   \
+      program { \
+         name: "bomb"_n",visible"; \
+         signal: "bomb"_n",visible"; \
+         source: "cannon_theme"; \
+         action: STATE_SET "visible" 0.0; \
+         transition: ACCELERATE 0.2; \
+         target: "bomb"_n; \
+      } \
+   \
+      program { \
+         name: "bomb"_n",hide"; \
+         signal: "bomb"_n",hide"; \
+         source: "cannon_theme"; \
+         action: STATE_SET "default" 0.0; \
+         transition: ACCELERATE 0.2; \
+         target: "bomb"_n; \
+      }
+
+                           BOMB(10, 45, -75)
+                    BOMB(6, 30, -50)  BOMB(9, 60, -50)
+           BOMB(5, 15, -25)  BOMB(3, 45, -25)  BOMB(8, 75, -25)
+     BOMB(4, 0, 0)  BOMB(1, 30, 0)  BOMB(2, 60, 0)  BOMB(7, 90, 0)
+
+#undef BOMB
+
+   }
+
+}
+
+group {
+   name: "bar";
+
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_INT) && (id == MSG_ID_STRENGTH)) {
+            new Float:st = getarg(2);
+            set_tween_state(PART:"circle_1", (st - (100/8) * 0) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_2", (st - (100/8) * 1) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_3", (st - (100/8) * 2) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_4", (st - (100/8) * 3) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_5", (st - (100/8) * 4) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_6", (st - (100/8) * 5) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_7", (st - (100/8) * 6) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+            set_tween_state(PART:"circle_8", (st - (100/8) * 7) / (100/8),
+                  "default", 0.0, "visible", 0.0);
+         }
+      }
+   }
+
+   images {
+      image: "bar_border.png" COMP;
+   }
+
+   parts {
+
+#define BAR(_n, _w, _h, _relto, _offset) \
+      images { \
+           image: "bar"_n"_"_w"_"_h".png" COMP; \
+      } \
+ \
+      part { \
+         name: "circle_"_n; \
+         type: IMAGE; \
+         mouse_events: 0; \
+         description { \
+            state: "default" 0.0; \
+            fixed: 1 1; \
+            min: _w _h; \
+            max: _w _h; \
+            image.normal: "bar"_n"_"_w"_"_h".png"; \
+            rel1.to: "circle_"_relto; \
+            rel1.relative: 1 0.5; \
+            rel1.offset: _offset  0; \
+            rel2.to: "circle_"_relto; \
+            rel2.relative: 1 0.5; \
+            rel2.offset: _offset -1; \
+            align: 0 0.5; \
+            color: 255 255 255 0; \
+         } \
+         description { \
+            state: "visible" 0.0; \
+            inherit: "default" 0.0; \
+            color: 255 255 255 255; \
+         } \
+      }
+
+  BAR(1, 45, 21, 0, 1) BAR(2, 22, 26, 1, -3) BAR(3, 23, 30, 2, -5)
+     BAR(4, 25, 35, 3, -7) BAR(5, 27, 39, 4, -9) BAR(6, 29, 43, 5, -11)
+        BAR(7, 32, 49, 6, -14) BAR(8, 36, 49, 7, -17)
+
+#undef BAR
+
+      part {
+         name: "border";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 175 53;
+            max: 175 53;
+            image.normal: "bar_border.png";
+         }
+      }
+
+      part {
+         name: "circle_0";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 1 1;
+            max: 1 1;
+            rel1.offset: -89 0;
+            rel2.offset: -88 -1;
+            color: 255 255 255 0;
+         }
+      }
+
+   }
+
+}
+group {
+   name: "boom";
+
+   images {
+      image: "smoke_1.png" COMP;
+      image: "smoke_2.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "smoke1";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 60 60;
+            max: 60 60;
+            color: 255 255 255 0;
+            fixed: 1 1;
+            image.normal: "smoke_1.png";
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 200;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 80 80;
+            max: 80 80;
+            rel1.offset: 40 -5;
+            rel2.offset: 39 -6;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "smoke2";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 47 33;
+            max: 47 33;
+            color: 255 255 255 0;
+            fixed: 1 1;
+            image.normal: "smoke_2.png";
+            rel1 {
+               offset: 4 38;
+            }
+            rel2 {
+               offset: 3 37;
+            }
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 200;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 55 40;
+            max: 55 40;
+            rel1.offset: 41 18;
+            rel2.offset: 40 17;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "points";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            min: 70 55;
+            max: 70 55;
+            color: 255 255 255 255;
+            text {
+               text: "";
+               font: "Game";
+               size: 32;
+               align: 0.5 0.5;
+            }
+         }
+         description {
+            state: "target" 0.0;
+            inherit: "default" 0.0;
+            color_class: "success";
+            text.size: 45;
+         }
+         description {
+            state: "hidden_outline" 0.0;
+            inherit: "default" 0.0;
+            color2: 200 200 200 0;
+            color3: 200 200 200 0;
+            text.size: 25;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "hidden_outline" 0.0;
+            color: 255 255 255 0;
+            text.size: 20;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "smoke,show";
+         signal: "load";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.12;
+         target: "smoke1";
+         target: "smoke2";
+         after: "smoke1,fade,out";
+         after: "smoke2,fade,out";
+         after: "points,hide";
+      }
+
+      program {
+         name: "smoke1,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.6;
+         target: "smoke1";
+         after: "smokes,hide";
+      }
+
+      program {
+         name: "smoke2,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.4;
+         target: "smoke2";
+      }
+
+      program {
+         name: "smokes,hide";
+         action: STATE_SET "default" 0.0;
+         target: "smoke1";
+         target: "smoke2";
+         after: "boom,end";
+      }
+
+      program {
+         name: "points,hide";
+         action: STATE_SET "hidden_outline" 0.0;
+         transition: ACCELERATE 0.2;
+         target: "points";
+         after: "points,fullhide";
+      }
+
+      program {
+         name: "points,fullhide";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.2;
+         target: "points";
+      }
+
+      program {
+         name: "points,target";
+         source: "boom";
+         signal: "istarget";
+         action: STATE_SET "target" 0.0;
+         target: "points";
+      }
+
+      program {
+         name: "boom,end";
+         action: SIGNAL_EMIT "end" "boom";
+      }
+
+   }
+
+}
+#define BUTTON_STYLE_SET(_name) \
+ \
+   group { \
+      name: "elm/button/base/efbb-"_name; \
+    \
+      images { \
+         image: "btn_"_name".png" COMP; \
+         image: "btn_"_name"_pressed.png" COMP; \
+      } \
+    \
+      parts { \
+    \
+         part { \
+            name: "blocker"; \
+            type: RECT; \
+            mouse_events: 1; \
+            description { \
+               state: "default" 0.0; \
+               color: 255 255 255 0; \
+            } \
+         } \
+    \
+         part { \
+            name: "base"; \
+            type: IMAGE; \
+            mouse_events: 0; \
+            description { \
+               state: "default" 0.0; \
+               min: 100 98; \
+               max: 200 196; \
+               image.normal: "btn_"_name".png"; \
+            } \
+            description { \
+               state: "pressed" 0.0; \
+               inherit: "default" 0.0; \
+               image.normal: "btn_"_name"_pressed.png"; \
+            } \
+         } \
+    \
+         part { \
+            name: "elm.text"; \
+            type: TEXT; \
+            effect: GLOW; \
+            mouse_events: 0; \
+            description { \
+               state: "default" 0.0; \
+               color_class: "button"; \
+               text { \
+                  font: "Game"; \
+                  size: 180; \
+               } \
+            } \
+            description { \
+               state: "pressed" 0.0; \
+               inherit: "default" 0.0; \
+               color_class: "button_pressed"; \
+            } \
+         } \
+    \
+         part { \
+            name: "over"; \
+            type: RECT; \
+            mouse_events: 1; \
+            ignore_flags: ON_HOLD; \
+            description { \
+               state: "default" 0.0; \
+               color: 255 255 255 0; \
+            } \
+         } \
+    \
+      } \
+    \
+      programs { \
+    \
+         program { \
+            name: "bt_clicked"; \
+            source: "over"; \
+            signal: "mouse,clicked,1"; \
+            action: SIGNAL_EMIT "elm,action,click" ""; \
+         } \
+    \
+         program { \
+            name: "bt_pressed"; \
+            source: "over"; \
+            signal: "mouse,down,1"; \
+            action: STATE_SET "pressed" 0.0; \
+            target: "base"; \
+            target: "elm.text"; \
+         } \
+    \
+         program { \
+            name: "bt_unpressed"; \
+            source: "over"; \
+            signal: "mouse,up,1"; \
+            action: STATE_SET "default" 0.0; \
+            target: "base"; \
+            target: "elm.text"; \
+         } \
+    \
+      } \
+    \
+   }
+
+BUTTON_STYLE_SET("regular")
+BUTTON_STYLE_SET("back")
+BUTTON_STYLE_SET("forward")
+
+group {
+   name: "elm/button/base/efbb-plain";
+
+   parts {
+
+      part {
+         name: "blocker";
+         type: RECT;
+         mouse_events: 1;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "elm.text";
+         type: TEXT;
+         effect: GLOW;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color_class: "regular";
+            text {
+               font: "Game";
+               size: 60;
+            }
+         }
+         description {
+            state: "pressed" 0.0;
+            inherit: "default" 0.0;
+            color_class: "regular_pressed";
+         }
+      }
+
+      part {
+         name: "over";
+         type: RECT;
+         mouse_events: 1;
+         ignore_flags: ON_HOLD;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "bt_clicked";
+         source: "over";
+         signal: "mouse,clicked,1";
+         action: SIGNAL_EMIT "elm,action,click" "";
+      }
+
+      program {
+         name: "bt_pressed";
+         source: "over";
+         signal: "mouse,down,1";
+         action: STATE_SET "pressed" 0.0;
+         target: "elm.text";
+      }
+
+      program {
+         name: "bt_unpressed";
+         source: "over";
+         signal: "mouse,up,1";
+         action: STATE_SET "default" 0.0;
+         target: "elm.text";
+      }
+
+   }
+
+}
+
+#undef BUTTON_STYLE_SET
+group {
+   name: "cannon_explosion";
+
+   images {
+      image: "explosion.png" COMP;
+   }
+   parts {
+
+      part {
+         name: "explosion";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 50 70;
+            max: 50 70;
+            color: 255 255 255 0;
+            image.normal: "explosion.png";
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            min: 110 100;
+            max: 110 100;
+            color: 255 255 255 255;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 140 110;
+            max: 140 110;
+            color: 255 255 255 0;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "explosion,show";
+         source: "cannon_theme";
+         signal: "explosion,show";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.1;
+         target: "explosion";
+         after: "explosion,fade,out";
+      }
+
+      program {
+         name: "explosion,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.1;
+         target: "explosion";
+         after: "explosion,hide";
+      }
+
+      program {
+         name: "explosion,hide";
+         action: STATE_SET "default" 0.0;
+         target: "explosion";
+      }
+
+   }
+
+}
+
+group {
+   name: "cannon_body";
+   images {
+      image: "cannon_body.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "body";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 246 50;
+            max: 246 50;
+            image.normal: "cannon_body.png";
+         }
+         description {
+            state: "back" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: -10 0;
+            rel2.offset: -11 -1;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "body,back";
+         source: "cannon_theme";
+         signal: "body,back";
+         action: STATE_SET "back" 0.0;
+         transition: ACCELERATE 0.16;
+         target: "body";
+         after: "body,default";
+      }
+
+      program {
+         name: "body,default";
+         action: STATE_SET "default" 0.0;
+         transition: ACCELERATE 0.16;
+         target: "body";
+      }
+
+   }
+
+}
+
+group {
+   name: "cannon_smoke1";
+
+   images {
+      image: "smoke_1.png" COMP;
+      image: "smoke_2.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "smoke1";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 76 76;
+            max: 76 76;
+            color: 255 255 255 0;
+            fixed: 1 1;
+            image.normal: "smoke_1.png";
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 200;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 100 100;
+            max: 100 100;
+            rel1.offset: 50 -10;
+            rel2.offset: 49 -11;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "smoke2";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 52 38;
+            max: 52 38;
+            color: 255 255 255 0;
+            fixed: 1 1;
+            image.normal: "smoke_2.png";
+            rel1 {
+               offset: 4 68;
+            }
+            rel2 {
+               offset: 3 67;
+            }
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 200;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 60 45;
+            max: 60 45;
+            rel1.offset: 41 48;
+            rel2.offset: 40 47;
+            color: 255 255 255 0;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "smoke,show";
+         source: "cannon_theme";
+         signal: "smoke1,show";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.12;
+         target: "smoke1";
+         target: "smoke2";
+         after: "smoke1,fade,out";
+         after: "smoke2,fade,out";
+      }
+
+      program {
+         name: "smoke1,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.6;
+         target: "smoke1";
+         after: "smokes,hide";
+      }
+
+      program {
+         name: "smoke2,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.4;
+         target: "smoke2";
+      }
+
+      program {
+         name: "smokes,hide";
+         action: STATE_SET "default" 0.0;
+         target: "smoke1";
+         target: "smoke2";
+      }
+
+   }
+
+}
+
+group {
+   name: "cannon_smoke2";
+
+   images {
+      image: "smoke_3.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "smoke";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 52 38;
+            max: 52 38;
+            color: 255 255 255 0;
+            fixed: 1 1;
+            image.normal: "smoke_3.png";
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 200;
+         }
+         description {
+            state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            min: 60 45;
+            max: 60 45;
+            rel1.offset: 30 0;
+            rel2.offset: 29 -1;
+            color: 255 255 255 0;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "smoke,show";
+         source: "cannon_theme";
+         signal: "smoke2,show";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.12;
+         target: "smoke";
+         after: "smoke,fade,out";
+      }
+
+      program {
+         name: "smoke,fade,out";
+         action: STATE_SET "hidden" 0.0;
+         transition: ACCELERATE 0.3;
+         target: "smoke";
+         after: "smoke,hide";
+      }
+
+      program {
+         name: "smoke,hide";
+         action: STATE_SET "default" 0.0;
+         target: "smoke";
+      }
+
+   }
+
+}
+
+
+group {
+   name: "cannon";
+
+   images {
+      image: "cannon_base.png" COMP;
+      image: "cannon_body.png" COMP;
+      image: "explosion.png" COMP;
+      image: "smoke_1.png" COMP;
+      image: "smoke_2.png" COMP;
+      image: "smoke_3.png" COMP;
+   }
+
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_INT) && (id == MSG_ID_ANGLE)) {
+            new Float:angle = getarg(2);
+            new x, y, xx, yy;
+
+            custom_state(PART:"body", "default", 0.0);
+            set_state_val(PART:"body", STATE_MAP_ROT_Z, -angle);
+            set_state(PART:"body", "custom", 0.0);
+
+            custom_state(PART:"explosion", "default", 0.0);
+            set_state_val(PART:"explosion", STATE_MAP_ROT_Z, -angle);
+            set_state(PART:"explosion", "custom", 0.0);
+
+            custom_state(PART:"bar", "default", 0.0);
+            set_state_val(PART:"bar", STATE_MAP_ROT_Z, -angle);
+            set_state(PART:"bar", "custom", 0.0);
+
+            x = round(70 + 110 * (1 - angle / 60));
+            y = round(-65 - 170 * angle / 60);
+
+            xx = x + rand() % 20;
+            yy = y + rand() % 20;
+
+            custom_state(PART:"smoke1", "default", 0.0);
+            set_state_val(PART:"smoke1", STATE_REL1_OFFSET, xx, yy);
+            set_state_val(PART:"smoke1", STATE_REL2_OFFSET, xx - 1, yy - 1);
+            set_state(PART:"smoke1", "custom", 0.0);
+
+            xx = x + 30 + rand() % 30;
+            yy = y + 10 + rand() % 30;
+
+            custom_state(PART:"smoke2", "default", 0.0);
+            set_state_val(PART:"smoke2", STATE_REL1_OFFSET, xx, yy);
+            set_state_val(PART:"smoke2", STATE_REL2_OFFSET, xx - 1, yy - 1);
+            set_state(PART:"smoke2", "custom", 0.0);
+
+         }
+      }
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "smoke1";
+         type: GROUP;
+         mouse_events: 0;
+         source: "cannon_smoke1";
+         description {
+            state: "default" 0.0;
+            min: 200 200;
+            fixed: 1 1;
+            rel1 {
+               to: "base";
+               relative: 1 0;
+            }
+            rel2 {
+               to: "base";
+               relative: 1 1;
+            }
+         }
+      }
+
+      part {
+         name: "explosion";
+         type: GROUP;
+         mouse_events: 0;
+         source: "cannon_explosion";
+         description {
+            state: "default" 0.0;
+            min: 200 200;
+            fixed: 1 1;
+            rel1 {
+               to: "body";
+               relative: 1 0;
+            }
+            rel2 {
+               to: "body";
+               relative: 1 1;
+            }
+            map {
+               on: 1;
+               rotation {
+                  center: "pin";
+               }
+            }
+         }
+      }
+
+      part {
+         name: "smoke2";
+         type: GROUP;
+         mouse_events: 0;
+         source: "cannon_smoke2";
+         description {
+            state: "default" 0.0;
+            min: 200 200;
+            fixed: 1 1;
+            rel1 {
+               to: "base";
+               relative: 1 0;
+            }
+            rel2 {
+               to: "base";
+               relative: 1 1;
+            }
+         }
+      }
+
+      part {
+         name: "body";
+         type: GROUP;
+         mouse_events: 0;
+         source: "cannon_body";
+         description {
+            state: "default" 0.0;
+            min: 300 300;
+            fixed: 1 1;
+            color: 255 0 0 255;
+            align: 0.2 0.5;
+            rel1 {
+               to: "pin";
+               offset: -14 0;
+            }
+            rel2 {
+               to: "pin";
+               offset: -13 -1;
+            }
+            map {
+               on: 1;
+               rotation {
+                  center: "pin";
+               }
+            }
+         }
+      }
+
+
+      part {
+         name: "base";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 130 68;
+            max: 130 68;
+            image.normal: "cannon_base.png";
+            align: 0 0;
+         }
+      }
+
+      part {
+         name: "pin";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 3 3;
+            max: 3 3;
+            color: 255 255 255 0;
+            rel1 {
+               to: "base";
+               offset: 40 -26;
+            }
+            rel2 {
+               to: "base";
+               offset: 39 -25;
+            }
+         }
+      }
+
+      part {
+         name: "bar_clipper";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+            rel1.to: "bar";
+            rel2.to: "bar";
+            min: 800 800;
+            max: 800 800;
+            fixed: 1 1;
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+
+      part {
+         name: "bar";
+         type: GROUP;
+         mouse_events: 0;
+         source: "bar";
+         clip_to: "bar_clipper";
+         description {
+            state: "default" 0.0;
+            min: 180 53;
+            max: 180 53;
+            fixed: 1 1;
+            rel1 {
+               to: "body";
+               relative: 1 0;
+               offset: 30 0;
+            }
+            rel2 {
+               to: "body";
+               relative: 1 1;
+               offset: 29 -1;
+            }
+            align: 0 0.5;
+            map {
+               on: 1;
+               rotation {
+                  center: "pin";
+               }
+            }
+         }
+      }
+
+      part {
+         name: "ammo";
+         type: GROUP;
+         mouse_events: 0;
+         source: "ammo";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               to: "base";
+               offset: 30 -12;
+            }
+            rel2 {
+               to: "base";
+               offset: 29 -11;
+            }
+            align: 0 1;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "load";
+         source: "cannon";
+         signal: "load";
+         action: STATE_SET "visible" 0.0;
+         target: "bar_clipper";
+      }
+
+      program {
+         name: "shoot";
+         source: "cannon";
+         signal: "shoot";
+         action: STATE_SET "default" 0.0;
+         target: "bar_clipper";
+         after: "explosion,show";
+         after: "body,back";
+      }
+
+      program {
+         name: "body,back";
+         action: SIGNAL_EMIT "body,back" "cannon_theme";
+      }
+
+      program {
+         name: "explosion,show";
+         action: SIGNAL_EMIT "explosion,show" "cannon_theme";
+         after: "smoke1,show";
+         after: "smoke2,show";
+         after: "empty";
+      }
+
+      program {
+         name: "smoke1,show";
+         in: 0 0.2;
+         action: SIGNAL_EMIT "smoke1,show" "cannon_theme";
+      }
+
+      program {
+         name: "smoke2,show";
+         in: 0 0.2;
+         action: SIGNAL_EMIT "smoke2,show" "cannon_theme";
+      }
+
+      program {
+         name: "empty";
+         in: 1.25 0;
+         action: SIGNAL_EMIT "empty" "cannon_theme";
+      }
+
+   }
+
+}
+group {
+   name: "elm/gengrid/base/efbb";
+
+   parts {
+
+      part {
+         name: "bg";
+         type: RECT;
+         mouse_events: 1;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+      }
+
+      part {
+         name: "elm.swallow.content";
+         type: SWALLOW;
+         description {
+            state: "default" 0.0;
+            rel1.offset: 0 40;
+            rel2.offset: -1 -41;
+         }
+      }
+
+   }
+
+}
+
+group {
+   name: "elm/gengrid/item/default/efbb";
+
+   data.item: "texts" "elm.text";
+
+   images {
+      image: "btn_regular.png" COMP;
+      image: "btn_regular_pressed.png" COMP;
+      image: "btn_level_disabled.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "event";
+         type: RECT;
+         repeat_events: 1;
+         description {
+            state: "default" 0.0;
+            color: 0 0 0 0;
+            rel1.relative: 0.2 0.2;
+            rel2.relative: 0.8 0.8;
+         }
+         description {
+            state: "disabled" 0.0;
+            visible: 0;
+            color: 0 0 0 0;
+         }
+      }
+
+      part {
+         name: "base";
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 200 196;
+            max: 200 196;
+            rel1.to: "event";
+            rel2.to: "event";
+            image.normal: "btn_regular.png";
+         }
+         description {
+            state: "selected" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "btn_regular_pressed.png";
+         }
+         description {
+            state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "btn_level_disabled.png";
+         }
+      }
+
+      part {
+         name: "elm.text";
+         type: TEXT;
+         effect: GLOW;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color_class: "button";
+            rel1.to: "event";
+            rel2.to: "event";
+            text {
+               font: "Game";
+               size: 180;
+               align: 1 0.5;
+            }
+         }
+         description {
+            state: "selected" 0.0;
+            inherit: "default" 0.0;
+            color_class: "button_pressed";
+         }
+         description {
+            state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color_class: "invisible";
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "go_active";
+         signal: "elm,state,selected";
+         source: "elm";
+         action: STATE_SET "selected" 0.0;
+         target: "base";
+         target: "elm.text";
+      }
+
+      program {
+         name: "go_passive";
+         signal: "elm,state,unselected";
+         source: "elm";
+         action: STATE_SET "default" 0.0;
+         target: "event";
+         target: "base";
+         target: "elm.text";
+      }
+
+      program {
+         name: "go_disabled";
+         signal: "elm,state,disabled";
+         source: "elm";
+         action: STATE_SET "disabled" 0.0;
+         target: "event";
+         target: "base";
+         target: "elm.text";
+      }
+
+      program {
+         name: "go_enabled";
+         signal: "elm,state,enabled";
+         source: "elm";
+         action: STATE_SET "default" 0.0;
+         target: "event";
+         target: "base";
+         target: "elm.text";
+      }
+
+   }
+
+}
+group {
+   name: "lvlsel_win";
+   min: 1280 720;
+   max: 1280 720;
+
+   images {
+      image: "bg.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            image.normal: "bg.png";
+         }
+      }
+
+      part {
+         name: "grid";
+         type: SWALLOW;
+         description {
+            state: "default" 0;
+            rel1.relative: 0 0.1;
+            rel2.relative: 1 0.8;
+         }
+      }
+
+      part {
+         name: "btn_menu";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.85;
+            rel2.relative: 0.66 1;
+            params {
+               string: "style" "efbb-plain";
+               string: "label" "BACK";
+            }
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "btn_menu_clicked";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "menu" "btn_menu";
+      }
+
+      program {
+         name: "btn_menu_sound";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+   }
+
+}
+
+#define SEA_ADD(_name, _time, _x1, _x2, _x3, _x4) \
+      part { \
+         name: #_name##"-1"; \
+         type: IMAGE; \
+         mouse_events: 0; \
+         description { \
+            state: "default" 0.0; \
+            min: 1280 112; \
+            max: 1280 112; \
+            image.normal: #_name".png"; \
+            align: 0 1; \
+            rel1.offset: _x1 0; \
+            rel2.offset: (_x1 - 1) -1; \
+         } \
+         description { \
+            state: "end" 0.0; \
+            inherit: "default" 0.0; \
+            rel1.offset: _x2 0; \
+            rel2.offset: (_x2 - 1) -1; \
+         } \
+      } \
+      part { \
+         name: #_name##"-2"; \
+         type: IMAGE; \
+         mouse_events: 0; \
+         description { \
+            state: "default" 0.0; \
+            min: 1280 112; \
+            max: 1280 112; \
+            rel1.offset: _x3 0; \
+            rel2.offset: (_x3 - 1) -1; \
+            image.normal: #_name##".png"; \
+            align: 0 1; \
+         } \
+         description { \
+            state: "end" 0.0; \
+            inherit: "default" 0.0; \
+            rel1.offset: _x4 0; \
+            rel2.offset: (_x4 - 1) -1; \
+         } \
+      } \
+      program { \
+         name: "move_"##_name; \
+         action: STATE_SET "end" 0.0; \
+         transition: LINEAR _time; \
+         target: #_name##"-1"; \
+         target: #_name##"-2"; \
+         after: "move_"##_name##",reset"; \
+      } \
+      program { \
+         name: "move_"##_name##",reset"; \
+         action: STATE_SET "default" 0.0; \
+         target: #_name##"-1"; \
+         target: #_name##"-2"; \
+         after: "move_"##_name; \
+      }
+
+group {
+   name: "main_win";
+
+   images {
+      image: "bars.png" COMP;
+      image: "logo.png" COMP;
+      image: "pirate-ship.png" COMP;
+      image: "sea-1.png" COMP;
+      image: "sea-2.png" COMP;
+      image: "sea-3.png" COMP;
+      image: "sea-4.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            min: 1280 720;
+            max: 1280 720;
+            color: 9 52 65 255;
+         }
+      }
+
+      SEA_ADD(sea-4, 6.0, 0, 1280, -1280, 0)
+
+      part {
+         name: "ship_height";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            visible: 0;
+         }
+         description {
+            state: "high" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 0 -14;
+            rel2.offset: -1 -15;
+         }
+         description {
+            state: "low" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 0 10;
+            rel2.offset: -1 -9;
+         }
+      }
+
+      part {
+         name: "ship";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 562 395;
+            max: 562 395;
+            rel1.offset: 10 260;
+            rel1.to_y: "ship_height";
+            rel2.offset: 9 259;
+            rel2.to_y: "ship_height";
+            image.normal: "pirate-ship.png";
+            align: 0 0;
+         }
+         description {
+            state: "mid" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 350 260;
+            rel2.offset: 349 259;
+         }
+         description {
+            state: "end" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 700 260;
+            rel2.offset: 699 259;
+         }
+      }
+
+      SEA_ADD(sea-3, 5.0, 1280, 0, 0, -1280)
+      SEA_ADD(sea-2, 4.5, 0, 1280, -1280, 0)
+      SEA_ADD(sea-1, 4.0, 1280, 0, 0, -1280)
+
+      part {
+         name: "bars";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 1280 720;
+            max: 1280 720;
+            image.normal: "bars.png";
+            rel1.relative: 0 -1;
+            rel2.relative: 1 0;
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0 0;
+            rel2.relative: 1 1;
+         }
+      }
+
+      part {
+         name: "logo";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 1280 550;
+            max: 1280 550;
+            color: 255 255 255 0;
+            rel1.offset: 0 -50;
+            rel2.offset: 0 -51;
+            image.normal: "logo.png";
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+
+      part {
+         name: "btn_play";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.46;
+            rel2.relative: 0.66 0.8;
+            params {
+               string: "style" "efbb-regular";
+               string: "label" "PLAY";
+            }
+            visible: 0;
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+
+      part {
+         name: "btn_exit";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.8;
+            rel2.relative: 0.66 1;
+            params {
+               string: "style" "efbb-plain";
+               string: "label" "EXIT";
+            }
+            visible: 0;
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "show";
+         signal: "show";
+         source: "game";
+         filter: "ship" "default";
+         after: "move_ship";
+         after: "move_ship_height,hi";
+         after: "move_sea-1";
+         after: "move_sea-2";
+         after: "move_sea-3";
+         after: "move_sea-4";
+         after: "show_logo";
+      }
+
+      program {
+         name: "move_ship";
+         action: STATE_SET "mid" 0.0;
+         transition: LINEAR 4.0;
+         target: "ship";
+         after: "move_ship,2";
+      }
+
+      program {
+         name: "move_ship,2";
+         action: STATE_SET "end" 0.0;
+         transition: DECEL 6.0;
+         target: "ship";
+      }
+
+      program {
+         name: "move_ship_height,hi";
+         action: STATE_SET "high" 0.0;
+         in: 0.1 0.2;
+         transition: DECEL 1.2;
+         target: "ship_height";
+         after: "move_ship_height,low";
+      }
+
+      program {
+         name: "move_ship_height,low";
+         action: STATE_SET "low" 0.0;
+         in: 0.1 0.4;
+         transition: ACCEL 0.8;
+         target: "ship_height";
+         after: "move_ship_height,hi";
+      }
+
+      program {
+         name: "show_logo";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 2.0;
+         target: "logo";
+         after: "show_logo,0";
+      }
+
+      program {
+         name: "show_logo,0";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.4;
+         target: "logo";
+         after: "move_bars";
+      }
+
+      program {
+         name: "move_bars";
+         action: SIGNAL_EMIT "bars.wav" "sound";
+         after: "move_bars,0";
+      }
+
+      program {
+         name: "move_bars,0";
+         action: STATE_SET "visible" 0.0;
+         transition: ACCELERATE 0.8;
+         target: "bars";
+         after: "show_buttons";
+      }
+
+      program {
+         name: "show_buttons";
+         action: STATE_SET "visible" 0.0;
+         target: "btn_play";
+         target: "btn_exit";
+      }
+
+      program {
+         name: "btn_play_clicked";
+         signal: "clicked";
+         source: "btn_play";
+         action: SIGNAL_EMIT "play" "btn_play";
+      }
+
+      program {
+         name: "btn_play_sound";
+         signal: "clicked";
+         source: "btn_play";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "btn_exit_clicked";
+         signal: "clicked";
+         source: "btn_exit";
+         action: SIGNAL_EMIT "exit" "btn_exit";
+      }
+
+      program {
+         name: "btn_exit_sound";
+         signal: "clicked";
+         source: "btn_exit";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+   }
+}
+
+#undef SEA_ADD
+
+#define IMAGE_BLINK_ADD(_name) \
+    group { \
+      name: _name; \
+      parts { \
+         part { \
+            name: "blink"; \
+            mouse_events: 0; \
+            type: RECT; \
+            description { \
+               state: "default" 0.0; \
+               visible: 0; \
+            } \
+            description { \
+               state: "blinking" 0.0; \
+               inherit: "default" 0.0; \
+            } \
+         } \
+         part { \
+            name: #_name; \
+            mouse_events: 0; \
+            type: IMAGE; \
+            description { \
+               state: "default" 0.0; \
+               image.image: #_name##".png" COMP; \
+               image.normal: #_name##".png"; \
+               color: 255 255 255 255; \
+            } \
+            description { \
+               state: "hidden" 0.0; \
+               inherit: "default" 0.0; \
+               color: 255 255 255 0; \
+            } \
+         } \
+      } \
+      programs { \
+         program { \
+            name: "blink"; \
+            signal: "blink"; \
+            source: "game"; \
+            filter: "blink" "default"; \
+            action: STATE_SET "blinking" 0.0; \
+            target: "blink"; \
+            after: "blink,0"; \
+         } \
+         program { \
+            name: "blink,0"; \
+            action: STATE_SET "hidden" 0.0; \
+            transition: LINEAR 0.3; \
+            target: #_name; \
+            after: "blink,1"; \
+         } \
+         program { \
+            name: "blink,1"; \
+            action: STATE_SET "default" 0.0; \
+            transition: LINEAR 0.3; \
+            in: 0.2 0; \
+            target: #_name; \
+            after: "blink,2"; \
+         } \
+         program { \
+            name: "blink,2"; \
+            action: STATE_SET "hidden" 0.0; \
+            transition: LINEAR 0.2; \
+            target: #_name; \
+            after: "blink,3"; \
+         } \
+         program { \
+            name: "blink,3"; \
+            action: STATE_SET "default" 0.0; \
+            transition: LINEAR 0.1; \
+            in: 0.1 0; \
+            target: #_name; \
+            after: "blink,4"; \
+         } \
+         program { \
+            name: "blink,4"; \
+            action: STATE_SET "hidden" 0.0; \
+            transition: LINEAR 0.1; \
+            target: #_name; \
+            after: "blink,5"; \
+         } \
+         program { \
+            name: "blink,5"; \
+            action: STATE_SET "default" 0.0; \
+            transition: LINEAR 0.05; \
+            target: #_name; \
+            after: "blink,6"; \
+         } \
+         program { \
+            name: "blink,6"; \
+            action: STATE_SET "hidden" 0.0; \
+            transition: LINEAR 0.03; \
+            target: #_name; \
+            after: "blink,7"; \
+         } \
+         program { \
+            name: "blink,7"; \
+            action: SIGNAL_EMIT "end" "object"; \
+         } \
+      } \
+   }
+
+IMAGE_BLINK_ADD(flag)
+IMAGE_BLINK_ADD(sailback)
+IMAGE_BLINK_ADD(sailfront)
+
+IMAGE_BLINK_ADD(prisonbar_80)
+IMAGE_BLINK_ADD(prisonbar_100)
+IMAGE_BLINK_ADD(prisonbar_120)
+
+#undef IMAGE_BLINK_ADD
+group {
+   name: "options";
+
+   images {
+      image: "sound_on.png" COMP;
+      image: "sound_off.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "sound_event";
+         type: RECT;
+         mouse_events: 1;
+         description {
+            state: "default" 0.0;
+            color: 0 0 0 0;
+            rel1.relative: 0 0;
+            rel2.relative: 0.5 1;
+         }
+      }
+
+      part {
+         name: "btn_sound";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 56 56;
+            max: 56 56;
+            rel1.to: "sound_event";
+            rel2.to: "sound_event";
+            image.normal: "sound_on.png";
+         }
+         description {
+            state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sound_off.png";
+         }
+      }
+
+      part {
+         name: "btn_pause";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.5 0;
+            rel2.relative: 1 1;
+            visible: 0;
+            params {
+               string: "style" "efbb-plain";
+               string: "effect" "GLOW";
+               string: "label" "II";
+            }
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "sound_turn_off";
+         signal: "mouse,clicked,1";
+         source: "sound_event";
+         filter: "btn_sound" "default";
+         action: STATE_SET "disabled" 0.0;
+         transition: LINEAR 0.1;
+         target: "btn_sound";
+      }
+
+      program {
+         name: "sound_turn_on";
+         signal: "mouse,clicked,1";
+         source: "sound_event";
+         filter: "btn_sound" "disabled";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 0.1;
+         target: "btn_sound";
+      }
+
+      program {
+         name: "btn_sound_switch";
+         signal: "mouse,clicked,1";
+         source: "sound_event";
+         action: SIGNAL_EMIT "sound" "switch";
+      }
+
+      program {
+         name: "btn_pause_clicked";
+         signal: "clicked";
+         source: "btn_pause";
+         action: SIGNAL_EMIT "pause" "game";
+      }
+
+      program {
+         name: "btn_pause_sound";
+         signal: "clicked";
+         source: "btn_pause";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "pause_hide";
+         source: "game";
+         signal: "hide_pause";
+         action: STATE_SET "default" 0.0;
+         target: "btn_pause";
+      }
+
+      program {
+         name: "pause_show";
+         source: "game";
+         signal: "show_pause";
+         action: STATE_SET "visible" 0.0;
+         target: "btn_pause";
+      }
+
+   }
+
+}
+group {
+   name: "pause_win";
+   min: 1280 720;
+   max: 1280 720;
+
+   images{
+      image: "retry_win_bg.jpg" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            color: 130 130 130 130;
+            image.normal: "retry_win_bg.jpg";
+         }
+      }
+
+      part {
+         name: "title";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            color_class: "fail";
+            text {
+               text: "Game Paused";
+               font: "Game";
+               size: 92;
+               align: 0.5 0.15;
+            }
+         }
+      }
+
+      part {
+         name: "btn_resume";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 255;
+            rel1.relative: 0.35 0.35;
+            rel2.relative: 0.65 0.65;
+            visible: 1;
+            params {
+               string: "style" "efbb-regular";
+               string: "label" "Resume";
+            }
+         }
+      }
+
+      part {
+         name: "btn_menu";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.85;
+            rel2.relative: 0.66 1;
+            params {
+               string: "style" "efbb-plain";
+               string: "label" "MENU";
+            }
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "btn_resume_clicked";
+         signal: "clicked";
+         source: "btn_resume";
+         action: SIGNAL_EMIT "resume" "game";
+      }
+
+      program {
+         name: "btn_resume_sound";
+         signal: "clicked";
+         source: "btn_retry";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "btn_menu_clicked";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "menu" "btn_menu";
+      }
+
+      program {
+         name: "btn_menu_sound";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+   }
+
+}
+group {
+   name: "retry_win";
+   min: 1280 720;
+   max: 1280 720;
+
+   images{
+      image: "retry_win_bg.jpg" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            color: 130 130 130 130;
+            image.normal: "retry_win_bg.jpg";
+         }
+      }
+
+      part {
+         name: "title";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            color_class: "fail";
+            text {
+               text: "LEVEL FAILED!";
+               font: "Game";
+               size: 128;
+               align: 0.5 0.15;
+            }
+         }
+      }
+
+      part {
+         name: "btn_retry";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 255;
+            rel1.relative: 0.35 0.35;
+            rel2.relative: 0.65 0.65;
+            visible: 1;
+            params {
+               string: "style" "efbb-regular";
+               string: "label" "RETRY";
+            }
+         }
+      }
+
+      part {
+         name: "btn_menu";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.85;
+            rel2.relative: 0.66 1;
+            params {
+               string: "style" "efbb-plain";
+               string: "label" "MENU";
+            }
+         }
+      }
+
+   }
+
+   programs {
+
+      program {
+         name: "btn_retry_clicked";
+         signal: "clicked";
+         source: "btn_retry";
+         action: SIGNAL_EMIT "retry" "btn_retry";
+      }
+
+      program {
+         name: "btn_retry_sound";
+         signal: "clicked";
+         source: "btn_retry";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "btn_menu_clicked";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "menu" "btn_menu";
+      }
+
+      program {
+         name: "btn_menu_sound";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }    
+
+   }
+
+}
+
+group {
+   name: "next_win";
+   min: 1280 720;
+   max: 1280 720;
+
+   images{
+      image: "bonus_bomb.png" COMP;
+      image: "total_bar.png" COMP;
+   }
+
+   parts {
+
+      part {
+         name: "bg";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            color: 130 130 130 130;
+            image.normal: "retry_win_bg.jpg";
+         }
+      }
+
+      part {
+         name: "bomb";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            align: 0.39 0.538;
+            max: 70 70;
+            image.normal: "bonus_bomb.png";
+            visible: 1;
+         }
+      }
+
+      part {
+         name: "bar";
+         type: IMAGE;
+         description {
+            state: "default" 0.0;
+            align: 0.5 0.61;
+            max: 387 13;
+            image.normal: "total_bar.png";
+            visible: 1;
+         }
+      }
+
+      part {
+         name: "title";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            color_class: "success";
+            text {
+               text: "YOU WIN!";
+               font: "Game";
+               size: 128;
+               align: 0.5 0.15;
+            }
+         }
+      }
+
+      part {
+         name: "btn_next";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.57 0.3;
+            rel2.relative: 0.97 0.7;
+            color: 255 255 255 0;
+            visible: 0;
+            params {
+               string: "style" "efbb-forward";
+               string: "label" "NEXT";
+            }
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+            visible: 1;
+         }
+      }
+
+      part {
+         name: "btn_menu";
+         type: EXTERNAL;
+         source: "elm/button";
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.33 0.85;
+            rel2.relative: 0.66 1;
+            params {
+               string: "style" "efbb-plain";
+               string: "label" "MENU";
+            }
+         }
+      }
+
+      part {
+         name: "score";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.44 0.4;
+            rel2.relative: 0.66 0.5;
+            fixed: 1 1;
+            visible: 1;
+            text {
+               text: "0 POINTS";
+               font: "Game";
+               size: 62;
+            }
+         }
+      }
+
+      part {
+         name: "bonus";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            rel1.relative: 0.44 0.5;
+            rel2.relative: 0.66 0.6;
+            fixed: 1 1;
+            visible: 1;
+            text {
+               text: "+ 0 BONUS";
+               font: "Game";
+               size: 62;
+            }
+         }
+      }
+
+      part {
+         name: "xbonus";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            fixed: 1 1;
+            visible: 1;
+            text {
+               text: "X0";
+               font: "Game";
+               size: 62;
+               align: 0.41 0.555;
+            }
+         }
+      }
+
+      part {
+         name: "score_total";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            color_class: "success";
+            visible: 1;
+            text {
+               text: "0";
+               font: "Game";
+               size: 128;
+               align: 0.5 0.77;
+            }
+         }
+      }
+
+   }
+
+   programs {
+   
+      program {
+         name: "btn_menu_clicked";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "menu" "btn_menu";
+      }
+
+      program {
+         name: "btn_menu_sound";
+         signal: "clicked";
+         source: "btn_menu";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "btn_next_clicked";
+         signal: "clicked";
+         source: "btn_next";
+         action: SIGNAL_EMIT "next" "btn_next";
+      }
+
+      program {
+         name: "btn_next_sound";
+         signal: "clicked";
+         source: "btn_next";
+         action: SIGNAL_EMIT "button.wav" "sound";
+      }
+
+      program {
+         name: "next_hide";
+         source: "level_end";
+         signal: "hide_next";
+         action: STATE_SET "default" 0.0;
+         target: "btn_next";
+      }
+
+      program {
+         name: "next_level_exist";
+         source: "level_end";
+         signal: "next_exist";
+         action: STATE_SET "visible" 0.0;
+         target: "btn_next";
+      }
+
+   }
+
+}
+group {
+   name: "score";
+   min: 300 100;
+   max: 300 100;
+
+   parts {
+
+      part {
+         name: "hiscore_lb";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            text {
+               text: "Hi-score:";
+               font: "Game";
+               size: 52;
+               align: 0 0;
+            }
+         }
+      }
+
+      part {
+         name: "hiscore";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            text {
+               text: "0";
+               font: "Game";
+               size: 52;
+               align: 1 0;
+            }
+         }
+      }
+
+      part {
+         name: "score_lb";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            text {
+               text: "Score:";
+               font: "Game";
+               size: 52;
+               align: 0 1;
+            }
+         }
+      }
+
+      part {
+         name: "score";
+         type: TEXT;
+         effect: GLOW;
+         description {
+            state: "default" 0.0;
+            text {
+               text: "0";
+               font: "Game";
+               size: 52;
+               align: 1 1;
+            }
+         }
+      }
+   }
+
+}
+}
+
+#undef MSG_ID_AMMO
+#undef MSG_ID_ANGLE
+#undef MSG_ID_STRENGTH

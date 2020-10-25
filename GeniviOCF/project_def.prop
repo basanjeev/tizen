@@ -1,0 +1,11 @@
+APPNAME = livingroom
+
+type = app
+profile = wearable-2.3.1
+
+USER_SRCS = src/main.cpp
+USER_DEFS =
+USER_INC_DIRS = inc
+USER_OBJS =
+USER_LIBS =
+USER_EDCS =

@@ -1,0 +1,7 @@
+build.sh
+.vscode
+.sign
+Debug/
+Release/
+SA_Report/
+crash-info/

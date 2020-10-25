@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3.2" package="org.openconnectivity.geniviocf" version="1.0.0">
+    <author email="staff@openconnectivity.com" href="www.openconnectivity.org">Open Connectivity Foundation</author>
+    <description>Demo app for running the automotive demo at CES 2017.</description>
+    <profile name="wearable"/>
+    <ui-application appid="org.openconnectivity.geniviocf" exec="geniviocf" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>GeniviOCF</label>
+        <icon>geniviocf</icon>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/mediastorage</privilege>
+        <privilege>http://tizen.org/privilege/download</privilege>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/push</privilege>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage</privilege>
+    </privileges>
+    <feature name="http://tizen.org/feature/sensor.proximity.wakeup">true</feature>
+    <feature name="http://tizen.org/feature/sensor.wrist_up">true</feature>
+    <feature name="http://tizen.org/feature/sensor.accelerometer">true</feature>
+    <feature name="http://tizen.org/feature/sensor.linear_acceleration">true</feature>
+    <feature name="http://tizen.org/feature/sensor.accelerometer.wakeup">true</feature>
+    <feature name="http://tizen.org/feature/sensor.gesture_recognition">true</feature>
+    <feature name="http://tizen.org/feature/sensor.tiltmeter">true</feature>
+    <feature name="http://tizen.org/feature/sensor.proximity">true</feature>
+    <feature name="http://tizen.org/feature/sensor.rotation_vector">true</feature>
+</manifest>
